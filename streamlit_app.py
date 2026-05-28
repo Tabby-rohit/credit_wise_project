@@ -5,6 +5,7 @@ from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import precision_score
 
 DATA_PATH = "loan_approval_data.csv"
 
@@ -171,7 +172,8 @@ def main():
 
     model = GaussianNB()
     model.fit(X_train, y_train)
-    accuracy = model.score(X_test, y_test)
+    ypred = model.predict(X_test)
+    accuracy = precision_score(y_test, ypred, average="weighted")
 
     if st.button("Predict Loan Approval"):
         features = transform_input(
